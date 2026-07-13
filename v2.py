@@ -55,7 +55,7 @@ def estimate_loss():
         for k in range(eval_iters):
             X, Y = get_batch(split)
             logits, loss = model(X, Y)
-            losses[k] = loss.item()
+            losses[k] = loss.mean().item()
         out[split] = losses.mean()
     model.train()
     return out
@@ -200,7 +200,7 @@ for iter in range(max_iters):
     # evaluate the loss
     logits, loss = model(xb, yb)
     optimizer.zero_grad(set_to_none=True)
-    loss.backward()
+    loss.mean().backward()
     optimizer.step()
 
 # generate from the model
