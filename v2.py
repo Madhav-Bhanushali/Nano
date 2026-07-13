@@ -178,8 +178,10 @@ class BigramLanguageModel(nn.Module):
         return idx
 
 
-
 model = BigramLanguageModel()
+if torch.cuda.device_count() > 1:
+    print(f"Using {torch.cuda.device_count()} GPUs via DataParallel")
+    model = nn.DataParallel(model)
 m = model.to(device)
 
 # create a PyTorch optimizer
